@@ -9,12 +9,16 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -59,41 +63,85 @@ fun ArtSpaceLayout(modifier: Modifier = Modifier) {
     var artworkId by rememberSaveable { mutableIntStateOf(1) }
     val artwork = artworks.first { it.id == artworkId }
 
-    Column(
+    val onPreviousClick = {
+        artworkId = when (artworkId) {
+            1 -> artworks.size
+            else -> artworkId - 1
+        }
+    }
+    val onNextClick = {
+        artworkId = when (artworkId) {
+            artworks.size -> 1
+            else -> artworkId + 1
+        }
+    }
+
+    BoxWithConstraints(
         modifier = modifier
             .fillMaxSize()
             .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
+        contentAlignment = Alignment.Center
     ) {
-        ArtworkWall(
-            imageRes = artwork.imageRes,
-            contentDescription = stringResource(artwork.descriptionRes),
-            modifier = Modifier.weight(1f)
-        )
-        ArtworkDescriptor(
-            title = stringResource(artwork.titleRes),
-            artist = stringResource(artwork.artistRes),
-            year = stringResource(artwork.yearRes),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-        )
-        DisplayController(
-            onPreviousClick = {
-                artworkId = when (artworkId) {
-                    1 -> artworks.size
-                    else -> artworkId - 1
+        if (maxWidth > maxHeight) {
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.spacedBy(32.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ArtworkWall(
+                    imageRes = artwork.imageRes,
+                    contentDescription = stringResource(artwork.descriptionRes),
+                    modifier = Modifier
+                        .weight(3f)
+                        .fillMaxHeight()
+                )
+                Column(
+                    modifier = Modifier
+                        .weight(2f)
+                        .widthIn(max = 480.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    ArtworkDescriptor(
+                        title = stringResource(artwork.titleRes),
+                        artist = stringResource(artwork.artistRes),
+                        year = stringResource(artwork.yearRes),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    DisplayController(
+                        onPreviousClick = onPreviousClick,
+                        onNextClick = onNextClick,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
-            },
-            onNextClick = {
-                artworkId = when (artworkId) {
-                    artworks.size -> 1
-                    else -> artworkId + 1
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .widthIn(max = 600.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                ArtworkWall(
+                    imageRes = artwork.imageRes,
+                    contentDescription = stringResource(artwork.descriptionRes),
+                    modifier = Modifier.weight(1f)
+                )
+                ArtworkDescriptor(
+                    title = stringResource(artwork.titleRes),
+                    artist = stringResource(artwork.artistRes),
+                    year = stringResource(artwork.yearRes),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp)
+                )
+                DisplayController(
+                    onPreviousClick = onPreviousClick,
+                    onNextClick = onNextClick,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
     }
 }
 
@@ -103,17 +151,21 @@ fun ArtworkWall(
     contentDescription: String,
     modifier: Modifier = Modifier
 ) {
+    val painter = painterResource(imageRes)
+    val aspectRatio = painter.intrinsicSize.width / painter.intrinsicSize.height
+
     Box(
         modifier = modifier.padding(vertical = 16.dp),
         contentAlignment = Alignment.Center
     ) {
         Surface(
+            modifier = Modifier.aspectRatio(aspectRatio),
             color = Color.White,
             shadowElevation = 12.dp,
             border = BorderStroke(2.dp, MaterialTheme.colorScheme.outlineVariant)
         ) {
             Image(
-                painter = painterResource(imageRes),
+                painter = painter,
                 contentDescription = contentDescription,
                 contentScale = ContentScale.Fit,
                 modifier = Modifier.padding(24.dp)
