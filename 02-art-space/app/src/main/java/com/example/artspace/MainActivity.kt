@@ -57,11 +57,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ArtSpaceLayout(modifier: Modifier = Modifier) {
     var artworkId by remember { mutableIntStateOf(1) }
-    var imageRes by remember { mutableIntStateOf(R.drawable.starry_night) }
-    var descriptionRes by remember { mutableIntStateOf(R.string.starry_night_description) }
-    var titleRes by remember { mutableIntStateOf(R.string.starry_night_title) }
-    var artistRes by remember { mutableIntStateOf(R.string.starry_night_artist) }
-    var yearRes by remember { mutableIntStateOf(R.string.starry_night_year) }
+    val artwork = artworks.first { it.id == artworkId }
 
     Column(
         modifier = modifier
@@ -71,105 +67,29 @@ fun ArtSpaceLayout(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         ArtworkWall(
-            imageRes = imageRes,
-            contentDescription = stringResource(descriptionRes),
+            imageRes = artwork.imageRes,
+            contentDescription = stringResource(artwork.descriptionRes),
             modifier = Modifier.weight(1f)
         )
         ArtworkDescriptor(
-            title = stringResource(titleRes),
-            artist = stringResource(artistRes),
-            year = stringResource(yearRes),
+            title = stringResource(artwork.titleRes),
+            artist = stringResource(artwork.artistRes),
+            year = stringResource(artwork.yearRes),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp)
         )
         DisplayController(
             onPreviousClick = {
-                when (artworkId) {
-                    1 -> {
-                        artworkId = 5
-                        imageRes = R.drawable.pearl_earring
-                        descriptionRes = R.string.pearl_earring_description
-                        titleRes = R.string.pearl_earring_title
-                        artistRes = R.string.pearl_earring_artist
-                        yearRes = R.string.pearl_earring_year
-                    }
-                    2 -> {
-                        artworkId = 1
-                        imageRes = R.drawable.starry_night
-                        descriptionRes = R.string.starry_night_description
-                        titleRes = R.string.starry_night_title
-                        artistRes = R.string.starry_night_artist
-                        yearRes = R.string.starry_night_year
-                    }
-                    3 -> {
-                        artworkId = 2
-                        imageRes = R.drawable.impression_sunrise
-                        descriptionRes = R.string.impression_sunrise_description
-                        titleRes = R.string.impression_sunrise_title
-                        artistRes = R.string.impression_sunrise_artist
-                        yearRes = R.string.impression_sunrise_year
-                    }
-                    4 -> {
-                        artworkId = 3
-                        imageRes = R.drawable.great_wave
-                        descriptionRes = R.string.great_wave_description
-                        titleRes = R.string.great_wave_title
-                        artistRes = R.string.great_wave_artist
-                        yearRes = R.string.great_wave_year
-                    }
-                    5 -> {
-                        artworkId = 4
-                        imageRes = R.drawable.ninth_wave
-                        descriptionRes = R.string.ninth_wave_description
-                        titleRes = R.string.ninth_wave_title
-                        artistRes = R.string.ninth_wave_artist
-                        yearRes = R.string.ninth_wave_year
-                    }
+                artworkId = when (artworkId) {
+                    1 -> artworks.size
+                    else -> artworkId - 1
                 }
             },
             onNextClick = {
-                when (artworkId) {
-                    1 -> {
-                        artworkId = 2
-                        imageRes = R.drawable.impression_sunrise
-                        descriptionRes = R.string.impression_sunrise_description
-                        titleRes = R.string.impression_sunrise_title
-                        artistRes = R.string.impression_sunrise_artist
-                        yearRes = R.string.impression_sunrise_year
-                    }
-                    2 -> {
-                        artworkId = 3
-                        imageRes = R.drawable.great_wave
-                        descriptionRes = R.string.great_wave_description
-                        titleRes = R.string.great_wave_title
-                        artistRes = R.string.great_wave_artist
-                        yearRes = R.string.great_wave_year
-                    }
-                    3 -> {
-                        artworkId = 4
-                        imageRes = R.drawable.ninth_wave
-                        descriptionRes = R.string.ninth_wave_description
-                        titleRes = R.string.ninth_wave_title
-                        artistRes = R.string.ninth_wave_artist
-                        yearRes = R.string.ninth_wave_year
-                    }
-                    4 -> {
-                        artworkId = 5
-                        imageRes = R.drawable.pearl_earring
-                        descriptionRes = R.string.pearl_earring_description
-                        titleRes = R.string.pearl_earring_title
-                        artistRes = R.string.pearl_earring_artist
-                        yearRes = R.string.pearl_earring_year
-                    }
-                    5 -> {
-                        artworkId = 1
-                        imageRes = R.drawable.starry_night
-                        descriptionRes = R.string.starry_night_description
-                        titleRes = R.string.starry_night_title
-                        artistRes = R.string.starry_night_artist
-                        yearRes = R.string.starry_night_year
-                    }
+                artworkId = when (artworkId) {
+                    artworks.size -> 1
+                    else -> artworkId + 1
                 }
             },
             modifier = Modifier.fillMaxWidth()
