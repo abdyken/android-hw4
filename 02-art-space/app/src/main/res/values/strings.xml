@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Art Space</string>
+
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+
+    <string name="starry_night_title">The Starry Night</string>
+    <string name="starry_night_artist">Vincent van Gogh</string>
+    <string name="starry_night_year">1889</string>
+    <string name="starry_night_description">Swirling night sky with bright stars and a crescent moon over a quiet village with a dark cypress tree</string>
+
+    <string name="impression_sunrise_title">Impression, Sunrise</string>
+    <string name="impression_sunrise_artist">Claude Monet</string>
+    <string name="impression_sunrise_year">1872</string>
+    <string name="impression_sunrise_description">Hazy harbour at dawn with an orange sun reflected in the water and small boats in the foreground</string>
+
+    <string name="great_wave_title">The Great Wave off Kanagawa</string>
+    <string name="great_wave_artist">Katsushika Hokusai</string>
+    <string name="great_wave_year">1831</string>
+    <string name="great_wave_description">Huge curling blue wave about to crash over three boats with Mount Fuji small in the background</string>
+
+    <string name="ninth_wave_title">The Ninth Wave</string>
+    <string name="ninth_wave_artist">Ivan Aivazovsky</string>
+    <string name="ninth_wave_year">1850</string>
+    <string name="ninth_wave_description">Shipwrecked sailors clinging to a broken mast on a stormy sea lit by a golden sunrise</string>
+
+    <string name="pearl_earring_title">Girl with a Pearl Earring</string>
+    <string name="pearl_earring_artist">Johannes Vermeer</string>
+    <string name="pearl_earring_year">1665</string>
+    <string name="pearl_earring_description">Young woman in a blue and yellow turban looking over her shoulder and wearing a large pearl earring</string>
+</resources>
