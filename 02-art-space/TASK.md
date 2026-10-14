@@ -48,3 +48,12 @@ together with information about it and lets the user move between artworks.
 | 3 | The Great Wave off Kanagawa | Katsushika Hokusai | 1831 |
 | 4 | The Ninth Wave | Ivan Aivazovsky | 1850 |
 | 5 | Girl with a Pearl Earring | Johannes Vermeer | 1665 |
+
+## Challenge: build for different screen sizes
+
+Requirements:
+- Run the app on a tablet AVD in landscape orientation
+- Look for cut off UI elements broken alignment and broken button interaction
+- Fix the bugs following the large screen app quality basic compatibility guidelines
+- Use a different layout for wide screens if needed
+- Test the fixed app on both phone and tablet in portrait and landscape
